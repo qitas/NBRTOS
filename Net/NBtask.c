@@ -9,6 +9,19 @@
 #include <stdlib.h>
 #include <string.h>
 #include "platform.h"
+#include "stm32f1xx_hal.h"
+#include "cmsis_os.h"
+#include "adc.h"
+#include "gpio.h"
+#include "usart.h"
+#include "NB_BC95.h"
+#include "NBtask.h"
+
+nbiot_value_t temp;   /* 温度 */
+nbiot_value_t humi;   /* 湿度 */
+nbiot_value_t illumi; //光照
+nbiot_value_t press;  //压力
+nbiot_value_t LED;
 
 
 void write_callback( uint16_t       objid,
@@ -75,10 +88,10 @@ uint8_t cur_time=0;
 
 void res_update(time_t interval)
 {
-       if(cur_time>=last_time+interval){ 
+	 if(cur_time>=last_time+interval){ 
             cur_time=0;
             last_time=0;				 
-			temp.flag |= NBIOT_UPDATED;		
+						temp.flag |= NBIOT_UPDATED;		
             humi.flag |= NBIOT_UPDATED;					 
 		}else if(cur_time==0&&last_time==0){
 			
@@ -92,12 +105,27 @@ void res_update(time_t interval)
 		} 	 
 
 }	
-int NBTask(void)
+static bool _nbiot_init_state = false;
+
+void StartNBTask(void const * argument)
 {
-     int life_time = 300;
-	 int ret;
-     nbiot_init_environment();  
-	ret = nbiot_device_create( &dev,
+    int life_time = 300;
+		int ret;
+	  if ( !_nbiot_init_state )
+    {
+     nbiot_time_init();
+     osDelay(5000);		
+	   netdev_init();
+     _nbiot_init_state = true;
+    }
+//		for(;;)
+//		{
+//				osDelay(500);
+//				vTaskSuspendAll();
+//				printf("default NBTask task \t\n");
+//				xTaskResumeAll();	
+//		}
+		ret = nbiot_device_create( &dev,
 							   endpoint_name,
 								 uri,
 							   life_time,
@@ -106,8 +134,8 @@ int NBTask(void)
 							   execute_callback );
 	if ( ret )
 	{
-		nbiot_device_destroy( dev );
-		printf( "device add resource(/3200/0/5750) failed, code = %d.\r\n", ret );
+			nbiot_device_destroy( dev );
+			printf( "device add resource(/3200/0/5750) failed, code = %d.\r\n", ret );
 	}
 	LED.type = NBIOT_BOOLEAN;
 	LED.flag = NBIOT_READABLE|NBIOT_WRITABLE;
@@ -160,34 +188,31 @@ int NBTask(void)
 									  1,
 									  1,
 							  &illumi );//光照
-	if ( ret )
-	{
-		nbiot_device_destroy( dev );
-		printf( "device add resource(illumi) failed, code = %d.\r\n", ret );
-	}
-	ret = nbiot_device_connect(dev,60);
-	if ( ret )
-	{
-		nbiot_device_close( dev, 100);
-		nbiot_device_destroy( dev );
-		printf( "connect OneNET failed.\r\n" );
-		nbiot_reset();
-	}
-	else{
-		//Led4_Set(LED_ON);
-		printf( "connect OneNET success.\r\n" );
-			 
-			}
-	while(1)
-	{        
-			 ret = nbiot_device_step( dev, 1);
-			 if ( ret )
-			 {
-				 printf( "device step error, code = %d.\r\n", ret );
-			 } 
-			res_update(30);					 
-				  
-	}
-    nbiot_clear_environment();
-    return 0;
+		if ( ret )
+		{
+				nbiot_device_destroy( dev );
+				printf( "device add resource(illumi) failed, code = %d.\r\n", ret );
+		}
+		ret = nbiot_device_connect(dev,60);
+		if ( ret )
+		{
+				nbiot_device_close( dev, 100);
+				nbiot_device_destroy( dev );
+				printf( "connect OneNET failed.\r\n" );
+		}
+		else{
+				printf( "connect OneNET success.\r\n" );	 
+		}
+		for(;;)
+		{   
+				 printf("IN NBTask");					
+				 ret = nbiot_device_step( dev, 1);
+				 if ( ret )
+				 {
+					 printf( "device step error, code = %d.\r\n", ret );
+				 } 
+				 res_update(30);		
+						 
+						
+		}
 }

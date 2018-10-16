@@ -59,10 +59,12 @@
 #include "cmsis_os.h"
 
 #include "adc.h"
+#include "gpio.h"
 #include "usart.h"
 #include "usb_device.h"
-#include "gpio.h"
 #include "usbd_cdc_if.h"
+#include "NBtask.h"
+
 
 extern void MX_USB_DEVICE_Init(void);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
@@ -95,6 +97,11 @@ void StartDefaultTask(void const * argument);
 
 osThreadId USBTaskHandle;
 void StartUSBTask(void const * argument);
+
+
+osThreadId NBTaskHandle;
+void StartNBTask1(void const * argument);
+
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -129,10 +136,12 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
+  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 1, 128);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
-  osThreadDef(USBTask, StartUSBTask, osPriorityNormal, 1, 256);
+  osThreadDef(USBTask, StartUSBTask, osPriorityNormal, 2, 128);
   USBTaskHandle = osThreadCreate(osThread(USBTask), NULL);
+	osThreadDef(NBTask, StartNBTask, osPriorityNormal, 4, 256);
+  NBTaskHandle = osThreadCreate(osThread(NBTask), NULL);
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
@@ -184,6 +193,7 @@ void StartUSBTask(void const * argument)
   }
   /* USER CODE END StartDefaultTask */
 }
+
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
      

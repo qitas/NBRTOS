@@ -619,8 +619,7 @@ void nbiot_device_close( nbiot_device_t *dev,
   
 }
 
-int nbiot_device_step( nbiot_device_t *dev,
-                       int             timeout )
+int nbiot_device_step( nbiot_device_t *dev,int timeout )
 {
     time_t last;
     time_t curr;
@@ -811,10 +810,7 @@ int nbiot_resource_del( nbiot_device_t *dev,
 
 
 
-int nbiot_send_buffer(const nbiot_uri_t * uri,
-	                    uint8_t            *buffer,
-                        size_t              buffer_len,
-                        bool                updated )
+int nbiot_send_buffer(const nbiot_uri_t * uri, uint8_t  *buffer,size_t buffer_len,bool  updated)
 {
   char tmp[8];
 	char buf[1024];

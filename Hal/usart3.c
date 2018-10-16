@@ -19,8 +19,10 @@ static uint8_t rx_fifo[512];
 static uint8_t rx_fifo1[512];
 int8_t dl_buf_id=-1;
 FIFO(dl_buf,8,512); 
+
 #define UART_DMA 1
 #define MAX_RCV_LEN 512
+
 #ifdef UART_DMA
 #include "stm32f10x.h"
 #include "stm32f10x_dma.h"

@@ -46,21 +46,19 @@ LED_STATUS ledStatus;
 ************************************************************
 */
 void Led_Init(void)
-{
-	
-	GPIO_InitTypeDef gpioInitStrcut;
-  
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA|RCC_APB2Periph_GPIOC , ENABLE);	//打开GPIOA和GPIOC的时钟
-	
-	gpioInitStrcut.GPIO_Mode = GPIO_Mode_Out_PP;									//设置为推挽输出模式
-	gpioInitStrcut.GPIO_Pin = GPIO_Pin_12;					//初始化Pin12
-	gpioInitStrcut.GPIO_Speed = GPIO_Speed_50MHz;									//承载的最大频率
-	GPIO_Init(GPIOA, &gpioInitStrcut);
-	
-	gpioInitStrcut.GPIO_Mode = GPIO_Mode_Out_PP;									//设置为推挽输出模式
-	gpioInitStrcut.GPIO_Pin = GPIO_Pin_7 | GPIO_Pin_8 |GPIO_Pin_10;					//初始化Pin8、9、10
-	gpioInitStrcut.GPIO_Speed = GPIO_Speed_50MHz;									//承载的最大频率
-	GPIO_Init(GPIOC, &gpioInitStrcut);												//初始化GPIOC
+{	
+		GPIO_InitTypeDef gpioInitStrcut;	
+		RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA|RCC_APB2Periph_GPIOC , ENABLE);	//打开GPIOA和GPIOC的时钟
+		
+		gpioInitStrcut.GPIO_Mode = GPIO_Mode_Out_PP;									//设置为推挽输出模式
+		gpioInitStrcut.GPIO_Pin = GPIO_Pin_12;												//初始化Pin12
+		gpioInitStrcut.GPIO_Speed = GPIO_Speed_50MHz;									//承载的最大频率
+		GPIO_Init(GPIOA, &gpioInitStrcut);
+		
+		gpioInitStrcut.GPIO_Mode = GPIO_Mode_Out_PP;									//设置为推挽输出模式
+		gpioInitStrcut.GPIO_Pin = GPIO_Pin_7 | GPIO_Pin_8 |GPIO_Pin_10;					//初始化Pin8、9、10
+		gpioInitStrcut.GPIO_Speed = GPIO_Speed_50MHz;									//承载的最大频率
+		GPIO_Init(GPIOC, &gpioInitStrcut);												//初始化GPIOC
 
 	  Led1_Set(LED_OFF);
     Led2_Set(LED_OFF);

@@ -1,3 +1,4 @@
+
 #include "stm32f10x.h"
 #include "stm32f10x_usart.h"
 #include "stm32f10x_exti.h"
@@ -6,6 +7,25 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
+
+/*使用u-lib进行printf打印的实现，需要选择use u-lib*/
+
+#ifdef __GNUC__
+// With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf set to 'Yes') calls __io_putchar()
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#else
+#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#endif /* __GNUC__ */
+
+PUTCHAR_PROTOTYPE
+{
+    //Place your implementation of fputc here , e.g. write a character to the USART
+		while((USART1->SR & 0X40)== 0);
+    USART1->DR = (uint8_t)ch;
+    return ch;
+}
+
+
 /*
  *  @brief USART1初始化函数
  */
@@ -49,22 +69,5 @@ void USART1_Init(void)
     NVIC_Init(&NVIC_InitStructure);
 }
 
-/*使用u-lib进行printf打印的实现，需要选择use u-lib*/
-
-#ifdef __GNUC__
-// With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf set to 'Yes') calls __io_putchar()
-#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
-#else
-#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
-#endif /* __GNUC__ */
-
-PUTCHAR_PROTOTYPE
-{
-    //Place your implementation of fputc here , e.g. write a character to the USART
-    USART_SendData(USART1, (uint8_t)ch);
-    //Loop until the end of transmission
-    while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
-    return ch;
-}
 
 

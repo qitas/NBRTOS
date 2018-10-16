@@ -1,11 +1,7 @@
 #ifndef _KEY_H_
 #define _KEY_H_
 
-
 #include "stm32f10x.h"
-
-
-
 
 #define KEY0			GPIO_Pin_0
 #define KEY1			GPIO_Pin_1
@@ -17,7 +13,7 @@
 			按键按下与弹起
 *******************************************/
 #define KEYDOWN			1
-#define KEYUP			0
+#define KEYUP				0
 
 #define KEY0DOWN		0
 

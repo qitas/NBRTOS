@@ -36,17 +36,18 @@ void Peripheral_Init(void)
 }
 
 static bool _nbiot_init_state = false;
+
 void nbiot_init_environment()
 {
     if ( !_nbiot_init_state )
     {
-     nbiot_time_init();
-     USART1_Init();
-     USART3_Init(); 
-     Peripheral_Init();	 	
-     mDelay(5000);			
-	   netdev_init();
-     _nbiot_init_state = true;
+			 nbiot_time_init();
+			 USART1_Init();
+			 USART3_Init(); 
+			 Peripheral_Init();	 	
+			 mDelay(5000);			
+			 netdev_init();
+			 _nbiot_init_state = true;
     }
 }
 
@@ -54,8 +55,8 @@ void nbiot_clear_environment( void )
 {
     if ( _nbiot_init_state )
     {	
-      SendCmd("AT+MIPLDELETE=0","OK",300,0,10); 		
-       _nbiot_init_state = false;
+				SendCmd("AT+MIPLDELETE=0","OK",300,0,10); 		
+				_nbiot_init_state = false;
     }
 }
 

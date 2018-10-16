@@ -8,10 +8,11 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
-#include "platform.h"
+
 #include "delay.h"
 #include "key.h"
 #include "led.h"
+#include "platform.h"
 #include "SHT20.h"
 #include "adxl345.h"
 #include "BH1750.h"
@@ -154,18 +155,76 @@ void res_update(time_t interval)
 			} 	 
 
 }	
+
+/**
+  * @brief System Clock Configuration
+  * @retval None
+  */
+#include "stm32f10x_rcc.h"
+
+void SystemClock_Config(void)
+{
+			RCC_DeInit(); 
+
+			RCC_HSEConfig(RCC_HSE_ON); 
+
+			while(RCC_GetFlagStatus(RCC_FLAG_HSERDY) == RESET); 
+
+			RCC_HCLKConfig(RCC_SYSCLK_Div1);     
+
+			RCC_PCLK1Config(RCC_HCLK_Div2);  
+
+			RCC_PCLK2Config(RCC_HCLK_Div1);   
+
+			RCC_PLLConfig(RCC_PLLSource_HSE_Div1, RCC_PLLMul_9);  
+
+			RCC_PLLCmd(ENABLE);
+
+			while(RCC_GetFlagStatus(RCC_FLAG_PLLRDY) == RESET);  
+
+			RCC_SYSCLKConfig(RCC_SYSCLKSource_PLLCLK);  
+
+			while(RCC_GetSYSCLKSource()!= 0x08); 
+}
+#include "usart1.h"
+#include "usart3.h"
+#include "led.h"
+#include "delay.h"
+
 int main(void)
 {
-     int life_time = 300;
-	   int ret;
-     nbiot_init_environment();  
-        ret = nbiot_device_create( &dev,
-                                   endpoint_name,
-	                                 uri,
-                                   life_time,
-                                   write_callback,
-                                   read_callback,
-                                   execute_callback );
+		SystemClock_Config();
+		//USART1_Init();
+    //USART3_Init(); 
+		nbiot_init_environment();  
+		//Led_Init();
+		while(1){
+			Led1_Set(LED_OFF);
+			Led2_Set(LED_OFF);
+			Led3_Set(LED_OFF);
+			Led4_Set(LED_OFF);
+			//printf( "qitas test code\r\n");
+			mDelay(50);	
+			Led1_Set(LED_ON);
+			Led2_Set(LED_ON);
+			Led3_Set(LED_ON);
+			Led4_Set(LED_ON);
+		}
+}
+
+int main1(void)
+{
+		 int life_time = 300;
+		 int ret;
+		 nbiot_init_environment();  
+		 printf( "qitas test code\r\n");
+		 ret = nbiot_device_create( &dev,
+																 endpoint_name,
+																 uri,
+																 life_time,
+																 write_callback,
+																 read_callback,
+																 execute_callback );
         if ( ret )
         {
             nbiot_device_destroy( dev );
@@ -293,29 +352,25 @@ int main(void)
 				*/
         ret = nbiot_device_connect(dev,60);
 
-        if ( ret )
-        {
-            nbiot_device_close( dev, 100);
-            nbiot_device_destroy( dev );
-            printf( "connect OneNET failed.\r\n" );
-					  nbiot_reset();
-        }else{
-					  Led4_Set(LED_ON);
-				    printf( "connect OneNET success.\r\n" );
-				 
-				}
-     do
-    {        
-             ret = nbiot_device_step( dev, 1);
-             if ( ret )
-             {
-                 printf( "device step error, code = %d.\r\n", ret );
-             } 
-          	res_update(30);					 
-			      
+			if ( ret )
+			{
+					nbiot_device_close( dev, 100);
+					nbiot_device_destroy( dev );
+					printf( "connect OneNET failed.\r\n" );
+					nbiot_reset();
+			}else{
+					Led4_Set(LED_ON);
+					printf( "connect OneNET success.\r\n" );
+			 
+			}
+			do{        
+						ret = nbiot_device_step( dev, 1);
+						if ( ret )
+						{
+							 printf( "device step error, code = %d.\r\n", ret );
+						} 
+						res_update(30);					 		      
     } while(1);
     nbiot_clear_environment();
-
-
     return 0;
 }

@@ -4,11 +4,13 @@
 **/
 
 #include <error.h>
-#include <platform.h>
 #include <utils.h>
 #include <ctype.h>
 #include <errno.h>
-#include "bc95.h"
+#include <stdio.h>
+
+#include <platform.h>
+#include "NB_BC95.h"
 #include "at_cmd.h"
 
 
@@ -88,13 +90,10 @@ int nbiot_udp_recv( void              *buff,
     {
         return NBIOT_ERR_BADPARAM;
     }
-
-           netif_rx(buff,(uint16_t *)read);
-            if(*read!=0){ 
-							printf("recv:%s\r\n",buff);
-            }
-	   
-    
+		netif_rx(buff,(uint16_t *)read);
+		if(*read!=0){ 
+			printf("recv:%s\r\n",buff);
+		}	   
     return NBIOT_ERR_OK;
 }
 

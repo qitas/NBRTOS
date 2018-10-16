@@ -3,11 +3,14 @@
  * All rights reserved.
 **/
 
-#include "internal.h"
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "bc95.h"
+
+#include "internal.h"
+#include "NB_BC95.h"
+
 int nbiot_node_read( nbiot_node_t        *node,
                      nbiot_uri_t         *uri,
 										 uint8_t             flag, 

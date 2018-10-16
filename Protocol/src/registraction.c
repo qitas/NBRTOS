@@ -5,8 +5,8 @@
 
 #include "internal.h"
 #include "stdio.h"
-#include "bc95.h"
-#include "led.h"
+#include "NB_BC95.h"
+//#include "led.h"
 
 #define REGISTER_START  1
 #define REGISTER_UPDATE 2
@@ -166,7 +166,7 @@ void nbiot_register_step( nbiot_device_t *dev,
      }
 		if ( dev->state == STATE_REG_FAILED)
     {
-			Led1_Set(LED_OFF);
+			//Led1_Set(LED_OFF);
       nbiot_register_start(dev,buffer,buffer_len);         
     }
 }

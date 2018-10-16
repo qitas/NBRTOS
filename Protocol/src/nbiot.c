@@ -5,8 +5,10 @@
 
 #include "internal.h"
 #include "stdio.h"
-#include "bc95.h"
-#include "led.h"
+#include "NB_BC95.h"
+#include "at_cmd.h"
+//#include "led.h"
+
 uint32_t array[2][3]={0};
 int nbiot_device_create( nbiot_device_t         **dev,
                          const char              *endpoint_name,
@@ -410,7 +412,7 @@ static void handle_transaction( nbiot_device_t *dev,
 		 if(msg!=NULL){
 			    transaction = (nbiot_transaction_t*)NBIOT_LIST_GET( dev->transactions, dev->first_mid);
             if(*(msg+1)!='0'){
-							Led4_Set(LED_ON);
+							//Led4_Set(LED_ON);
 							dev->state=STATE_REGISTERED;
 							if(transaction!=NULL)
 								nbiot_transaction_del( dev,
@@ -432,7 +434,7 @@ static void handle_transaction( nbiot_device_t *dev,
 		msg=strstr(buffer,":");
 		 if(msg!=NULL){
        if(*(msg+1)=='0'){
-				 Led4_Set(LED_OFF);
+				 //Led4_Set(LED_OFF);
 		  if(dev->state==STATE_DEREG_PENDING){		 
 			 dev->state=STATE_DEREGISTERED;
 			 transaction = (nbiot_transaction_t*)NBIOT_LIST_GET( dev->transactions, dev->first_mid);
@@ -881,7 +883,6 @@ int nbiot_recv_buffer( uint8_t           *buffer,
     {
         return ret;
     }
-
     return recv;
 }
 

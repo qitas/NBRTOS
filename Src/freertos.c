@@ -136,11 +136,11 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 1, 128);
-  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
-  osThreadDef(USBTask, StartUSBTask, osPriorityNormal, 2, 128);
-  USBTaskHandle = osThreadCreate(osThread(USBTask), NULL);
-	osThreadDef(NBTask, StartNBTask, osPriorityNormal, 4, 256);
+  //osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 1, 128);
+  //defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+  //osThreadDef(USBTask, StartUSBTask, osPriorityNormal, 2, 128);
+  //USBTaskHandle = osThreadCreate(osThread(USBTask), NULL);
+	osThreadDef(NBTask, StartNBTask, osPriorityNormal, 4, 312);
   NBTaskHandle = osThreadCreate(osThread(NBTask), NULL);
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */

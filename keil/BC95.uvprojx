@@ -685,19 +685,14 @@
               <FilePath>..\Net\at_cmd.c</FilePath>
             </File>
             <File>
-              <FileName>fifo.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Net\fifo.c</FilePath>
-            </File>
-            <File>
-              <FileName>memb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Net\memb.c</FilePath>
-            </File>
-            <File>
               <FileName>ringbuf.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Net\ringbuf.c</FilePath>
+            </File>
+            <File>
+              <FileName>NBtask.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Net\NBtask.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -41,24 +41,21 @@
 #include "ringbuf.h"
 #include "string.h"
 /*---------------------------------------------------------------------------*/
-void
-ringbuf_init(struct ringbuf *r, uint8_t *dataptr, uint16_t size)
+void ringbuf_init(struct ringbuf *r, uint8_t *dataptr, uint16_t size)
 {
   r->data = dataptr;
   r->mask = size - 1;
   r->put_ptr = 0;
   r->get_ptr = 0;
 }
-void
-ringbuf_clear(struct ringbuf *r)
+void ringbuf_clear(struct ringbuf *r)
 {
     r->put_ptr = 0;
     r->get_ptr = 0;
     memset(r->data,0,r->mask);
 }
 /*---------------------------------------------------------------------------*/
-int
-ringbuf_put(struct ringbuf *r, uint16_t c)
+int ringbuf_put(struct ringbuf *r, uint16_t c)
 {
   /* Check if buffer is full. If it is full, return 0 to indicate that
      the element was not inserted into the buffer.
@@ -77,8 +74,7 @@ ringbuf_put(struct ringbuf *r, uint16_t c)
   return 1;
 }
 /*---------------------------------------------------------------------------*/
-int
-ringbuf_get(struct ringbuf *r)
+int ringbuf_get(struct ringbuf *r)
 {
   uint8_t c;
   

@@ -11,7 +11,7 @@ extern "C" {
 #endif
 
 #include "coap.h"
-#include <utils.h>
+#include "utils.h"
 #include "nbiot.h"
 
 typedef struct _nbiot_list_t

@@ -105,38 +105,9 @@ void res_update(time_t interval)
 		} 	 
 
 }	
-static bool _nbiot_init_state = false;
-
-void StartNBTask(void const * argument)
+void get_data(void)
 {
-    int life_time = 300;
-		int ret;
-	  if ( !_nbiot_init_state )
-    {
-     nbiot_time_init();
-     osDelay(5000);		
-	   netdev_init();
-     _nbiot_init_state = true;
-    }
-//		for(;;)
-//		{
-//				osDelay(500);
-//				vTaskSuspendAll();
-//				printf("default NBTask task \t\n");
-//				xTaskResumeAll();	
-//		}
-		ret = nbiot_device_create( &dev,
-							   endpoint_name,
-								 uri,
-							   life_time,
-							   write_callback,
-							   read_callback,
-							   execute_callback );
-	if ( ret )
-	{
-			nbiot_device_destroy( dev );
-			printf( "device add resource(/3200/0/5750) failed, code = %d.\r\n", ret );
-	}
+	int ret;
 	LED.type = NBIOT_BOOLEAN;
 	LED.flag = NBIOT_READABLE|NBIOT_WRITABLE;
 	ret = nbiot_resource_add( dev,
@@ -165,6 +136,7 @@ void StartNBTask(void const * argument)
 		nbiot_device_destroy( dev );
 		printf( "device add resource(temp) failed, code = %d.\r\n", ret );
 	}
+	printf("IN 2 NBTask");
 	humi.type = NBIOT_FLOAT;
 	humi.flag = NBIOT_READABLE;
 	ret = nbiot_resource_add( dev,
@@ -193,8 +165,36 @@ void StartNBTask(void const * argument)
 				nbiot_device_destroy( dev );
 				printf( "device add resource(illumi) failed, code = %d.\r\n", ret );
 		}
-		ret = nbiot_device_connect(dev,60);
+		
+}
+
+static bool _nbiot_init_state = false;
+
+void StartNBTask(void const * argument)
+{
+    int life_time = 300;
+		int ret;
+	  if ( !_nbiot_init_state )
+    {
+     //nbiot_time_init();
+     //osDelay(5000);		
+	   netdev_init();
+    }
+		printf("IN NBTask");		
+		ret = nbiot_device_create( &dev,
+							   endpoint_name,
+								 uri,
+							   life_time,
+							   write_callback,
+							   read_callback,
+							   execute_callback);
 		if ( ret )
+		{
+				nbiot_device_destroy( dev );
+				printf( "device create failed, code = %d.\r\n", ret );
+		}
+		ret = nbiot_device_connect(dev,60);
+		if (ret)
 		{
 				nbiot_device_close( dev, 100);
 				nbiot_device_destroy( dev );
@@ -205,14 +205,12 @@ void StartNBTask(void const * argument)
 		}
 		for(;;)
 		{   
-				 printf("IN NBTask");					
+				 printf("IN 6 NBTask");					
 				 ret = nbiot_device_step( dev, 1);
 				 if ( ret )
 				 {
 					 printf( "device step error, code = %d.\r\n", ret );
 				 } 
-				 res_update(30);		
-						 
-						
+				 res_update(30);							
 		}
 }

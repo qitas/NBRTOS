@@ -522,8 +522,7 @@ static void nbiot_handle_buffer( nbiot_device_t *dev,
     }
 }
 
-int nbiot_device_connect( nbiot_device_t *dev,                    
-                                  int         timeout )
+int nbiot_device_connect( nbiot_device_t *dev,int timeout)
 {
     int ret;
     time_t last;
@@ -575,8 +574,7 @@ int nbiot_device_connect( nbiot_device_t *dev,
     return 0;  
 }
 
-void nbiot_device_close( nbiot_device_t *dev,
-                         int             timeout )
+void nbiot_device_close( nbiot_device_t *dev,int  timeout)
 {
     int ret;
     uint8_t buffer[NBIOT_SOCK_BUF_SIZE];

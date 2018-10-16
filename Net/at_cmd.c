@@ -89,8 +89,8 @@ char SendCmd(char* cmd, uint8_t *result,uint16_t timeout,uint8_t retry,uint16_t 
 				retryflag=0;
 				sum=0;
 				nowtime=nbiot_time();
-      if(retry_num>0&&retry_num<retry+1){
-			
+      if(retry_num>0&&retry_num<retry+1)
+			{		
 			  	printf("retry cmd:%s",cmd);
 				  callback((uint8_t*)cmd, strlen((const char *)cmd));	
 			}
@@ -99,6 +99,8 @@ char SendCmd(char* cmd, uint8_t *result,uint16_t timeout,uint8_t retry,uint16_t 
    //mDelay(timeout);
 	 return 1;
 }
+
+
 void SentData(char* cmd, uint8_t *result,uint16_t timeout)
 {
   	char *msg_p=NULL;

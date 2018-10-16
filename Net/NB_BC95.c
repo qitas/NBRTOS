@@ -9,7 +9,7 @@
 #include "NB_BC95.h"
 #include "at_cmd.h"
 #include "utils.h"
-#include "fifo.h"
+//#include "fifo.h"
 
 
 //#include "led.h"
@@ -27,7 +27,7 @@ void netif_rx(uint8_t*buf,uint16_t *read)
 {
      uint8_t *msg_p=NULL;
      uint8_t ptr[1024]={0};
-     *read=fifo_get(dl_buf_id,ptr);
+     //*read=fifo_get(dl_buf_id,ptr);
      if(*read!=0)
      {
         if((msg_p = strstr((const char *)ptr, "+MIPL"))!=NULL)

@@ -136,7 +136,7 @@
             <DriverSelection>4107</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
-          <Flash2>STLink\ST-LINKIII-KEIL_SWO.dll</Flash2>
+          <Flash2>BIN\UL2CM3.DLL</Flash2>
           <Flash3></Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
@@ -382,7 +382,7 @@
             <File>
               <FileName>startup_stm32f103xb.s</FileName>
               <FileType>2</FileType>
-              <FilePath>startup_stm32f103xb.s</FilePath>
+              <FilePath>..\Middlewares\startup_stm32f103xb.s</FilePath>
             </File>
           </Files>
         </Group>

@@ -64,7 +64,8 @@
 #include "gpio.h"
 #include "usbd_cdc_if.h"
 
-
+extern void MX_USB_DEVICE_Init(void);
+void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */     
 
@@ -102,8 +103,7 @@ void StartUSBTask(void const * argument);
 
 
 
-extern void MX_USB_DEVICE_Init(void);
-void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
+
 
 /**
   * @brief  FreeRTOS initialization
@@ -179,8 +179,7 @@ void StartUSBTask(void const * argument)
   {
     osDelay(2000);
 		vTaskSuspendAll();
-		printf("USB task \t\n");
-		CDC_Transmit_FS(USBTxBuffer, strlen(USBTxBuffer));
+		CDC_Transmit_FS(USBTxBuffer, strlen((char *)USBTxBuffer));
 		xTaskResumeAll();		
   }
   /* USER CODE END StartDefaultTask */

@@ -1,16 +1,20 @@
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
-#include "delay.h"
+
+#include "stm32f1xx_hal.h"
+#include "cmsis_os.h"
+#include "NB_BC95.h"
 #include "at_cmd.h"
 #include "utils.h"
-#include "stm32f10x_gpio.h"
-#include "stm32f10x_rcc.h"
-#include "bc95.h"
 #include "fifo.h"
-#include "led.h"
-extern int8_t dl_buf_id;
+
+
+//#include "led.h"
+
+signed char dl_buf_id=-1;
 static char cmd_buff[1024];
 
 uint32_t ip_SendData(int8_t * buf, uint32_t len)
@@ -29,7 +33,8 @@ void netif_rx(uint8_t*buf,uint16_t *read)
         if((msg_p= strstr((const char *)ptr, "+MIPL"))!=NULL)
         {              
            memcpy(buf,ptr,*read);
-        }else{
+        }
+				else{
         
            *read=0;
         }
@@ -52,7 +57,7 @@ void netdev_init(void)
     printf("connect NB-IoT sucess\r\n");
 } 
 
-void bc95_addobj(uint16_t		objid,uint16_t		attrcount,uint16_t		actcount)
+void bc95_addobj(uint16_t	objid,uint16_t	attrcount,uint16_t	actcount)
 {
 	char tmp[10];
 	memset(cmd_buff,0,50);
@@ -92,33 +97,33 @@ void bc95_delobj(uint16_t 	 objid)
 {   
     size_t  len=0;
 	  char status=0;
-	len=strlen("AT+MIPLOPEN=0,2000\r\n")+1;
-	if(len<buffer_len){
-	 memcpy(buffer,"AT+MIPLOPEN=0,2000\r\n",len);
-	 status=SendCmd("AT+MIPLOPEN=0,2000\r\n","OK",1000,0,5);
-	 if(status==2)
-		SendCmd("AT+MIPLCLOSE=0\r\n","OK",300,0,5); 
-	 return len;
-   }
-	return 0;
+		len=strlen("AT+MIPLOPEN=0,2000\r\n")+1;
+		if(len<buffer_len){
+		memcpy(buffer,"AT+MIPLOPEN=0,2000\r\n",len);
+		status=SendCmd("AT+MIPLOPEN=0,2000\r\n","OK",1000,0,5);
+		if(status==2) SendCmd("AT+MIPLCLOSE=0\r\n","OK",300,0,5); 
+		return len;
+		}
+		return 0;
 }
 
  size_t bc95_register_update (uint16_t lifttime, uint8_t *buffer,									    
                                      size_t  buffer_len)
 {   
     size_t  len=0;
-	char ative[6]={0};
-  nbiot_itoa(lifttime,ative,6);
-	memcpy(buffer,"AT+MIPLUPDATE=0,",sizeof("AT+MIPLUPDATE=0,"));
-	strcat(buffer,ative);
-	strcat(buffer,",0\r\n");
-	len=strlen(buffer)+1;
-	if(len<buffer_len){
-	 SendCmd(buffer,"OK",300,0,5);
-	 return len;
-   }
-	return 0;
+		char ative[6]={0};
+		nbiot_itoa(lifttime,ative,6);
+		memcpy(buffer,"AT+MIPLUPDATE=0,",sizeof("AT+MIPLUPDATE=0,"));
+		strcat(buffer,ative);
+		strcat(buffer,",0\r\n");
+		len=strlen(buffer)+1;
+		if(len<buffer_len){
+			 SendCmd(buffer,"OK",300,0,5);
+			 return len;
+		}
+		return 0;
 }
+
  size_t bc95_close_request( uint8_t  *buffer,									    
                              size_t    buffer_len)
 {   

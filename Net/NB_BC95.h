@@ -3,8 +3,8 @@
 
 #include <stdint.h>
 #include <string.h>
-#include "internal.h"
 
+#include "internal.h"
 
 typedef enum
 {

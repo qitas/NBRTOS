@@ -881,7 +881,6 @@ int nbiot_recv_buffer( uint8_t           *buffer,
     {
         return ret;
     }
-
     return recv;
 }
 

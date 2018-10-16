@@ -39,7 +39,7 @@ void netif_rx(uint8_t*buf,uint16_t *read)
 
 void netdev_init(void)
 {
- 	SendCmd("AT+NRB\r\n", "OK", 5000,0,10); 
+		SendCmd("AT+NRB\r\n", "OK", 5000,0,10); 
 	  SendCmd("AT+CIMI\r\n", "OK", 2000,3,5);
 	  SendCmd("AT+CMEE=1\r\n","OK", 2000,0,10);
     SendCmd("AT+CSCON=1\r\n","OK", 2000,0,10);  

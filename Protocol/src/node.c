@@ -9,7 +9,14 @@
 #include <stdlib.h>
 
 #include "internal.h"
-#include "NB_BC95.h"
+#ifdef BC26
+#include "BC26.h"
+#include "BC26_AT.h"
+#elifdef
+#include "BC95.h"
+#include "at_cmd.h"
+#endif
+
 
 int nbiot_node_read( nbiot_node_t        *node,
                      nbiot_uri_t         *uri,

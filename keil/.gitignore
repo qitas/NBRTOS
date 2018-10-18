@@ -1,0 +1,4 @@
+./DebugConfig/*
+./RTE/*
+./BC*/*
+./*.lst

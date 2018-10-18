@@ -10,9 +10,14 @@
 #include <stdio.h>
 
 #include <platform.h>
-#include "NB_BC95.h"
-#include "at_cmd.h"
 
+#ifdef BC26
+#include "BC26.h"
+#include "BC26_AT.h"
+#elifdef
+#include "BC95.h"
+#include "at_cmd.h"
+#endif
 
 #ifdef NBIOT_DEBUG
 #include <stdio.h>

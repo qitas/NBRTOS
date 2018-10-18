@@ -5,8 +5,17 @@
 
 #include "internal.h"
 #include "stdio.h"
-#include "NB_BC95.h"
+#include "BC95.h"
 #include "at_cmd.h"
+
+//#ifdef BC26
+//#include "BC26.h"
+//#include "BC26_AT.h"
+//#elifdef
+//#include "BC95.h"
+//#include "at_cmd.h"
+//#endif
+
 //#include "led.h"
 
 uint32_t array[2][3]={0};

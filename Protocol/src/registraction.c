@@ -5,7 +5,7 @@
 
 #include "internal.h"
 #include "stdio.h"
-#include "NB_BC95.h"
+#include "BC95.h"
 //#include "led.h"
 
 #define REGISTER_START  1

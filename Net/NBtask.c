@@ -14,7 +14,7 @@
 #include "adc.h"
 #include "gpio.h"
 #include "usart.h"
-#include "NB_BC95.h"
+#include "BC95.h"
 #include "NBtask.h"
 
 nbiot_value_t temp;   /* ÎÂ¶È */

@@ -37,14 +37,14 @@ int nbiot_device_create( nbiot_device_t         **dev,
     }
     
     *dev = tmp;
-		tmp->next_mid = nbiot_rand();
-		tmp->first_mid = tmp->next_mid;
+	tmp->next_mid = nbiot_rand();
+	tmp->first_mid = tmp->next_mid;
     tmp->life_time = life_time;
     tmp->write_func = write_func;
-		tmp->read_func = read_func;
+	tmp->read_func = read_func;
     tmp->execute_func = execute_func;
     tmp->endpoint_name = endpoint_name;	
-		SendCmd("AT+MIPLCREATE\r\n","OK",300,0,10);
+	SendCmd("AT+MIPLCREATE\r\n","OK",300,0,10);
     return NBIOT_ERR_OK;
 }
 
@@ -121,11 +121,9 @@ void nbiot_device_destroy( nbiot_device_t *dev )
 static void handle_read( nbiot_device_t    *dev,
                          nbiot_uri_t       *uri,
                          uint8_t           *buffer,
-                         size_t             buffer_len
-                         )
+                         size_t             buffer_len )
 {
-    do
-    {
+    do{
         int ret;
         nbiot_node_t *node;
 			  
@@ -144,7 +142,7 @@ static void handle_read( nbiot_device_t    *dev,
                                false );
 		nbiot_send_buffer(uri,buffer,ret,false);
 			 
-    } while (0);
+    }while (0);
 }
 
 static void handle_write( nbiot_device_t        *dev,
@@ -154,8 +152,7 @@ static void handle_write( nbiot_device_t        *dev,
                           size_t                 buffer_len,
                           nbiot_write_callback_t write_func )
 {
-    do
-    {
+    do{
         int ret;
         nbiot_node_t *node;
 
@@ -630,8 +627,7 @@ int nbiot_device_step( nbiot_device_t *dev,int timeout )
     time_t curr;
     uint8_t buffer[NBIOT_SOCK_BUF_SIZE];
     last = nbiot_time();
-    do
-    {
+    do{
         int buffer_len = nbiot_recv_buffer( buffer,
                                          sizeof(buffer) ); 
         if ( buffer_len > 0 )
@@ -648,26 +644,27 @@ int nbiot_device_step( nbiot_device_t *dev,int timeout )
                              curr,
                              buffer,
                              sizeof(buffer));
-     if (  dev->state == STATE_REGISTERED ||
+		if (  dev->state == STATE_REGISTERED ||
            dev->state == STATE_REG_UPDATE_NEEDED ||
            dev->state == STATE_REG_UPDATE_PENDING||
            dev->state ==STATE_DEREG_PENDING||
            dev->state ==STATE_REG_PENDING||
-		       dev->state ==STATE_REG_FAILED  ){					
-        nbiot_transaction_step( dev,
+		   dev->state ==STATE_REG_FAILED  ){					
+				nbiot_transaction_step( dev,
                                 curr,
                                 buffer,
                                 sizeof(buffer));                      
 			}			 
-      if ( dev->state  == STATE_REGISTERED||dev->state == STATE_REG_UPDATE_PENDING||dev->state == STATE_REG_UPDATE_NEEDED ){					                    
-        nbiot_observe_step( dev,
+		if ( dev->state  == STATE_REGISTERED||dev->state == STATE_REG_UPDATE_PENDING||dev->state == STATE_REG_UPDATE_NEEDED )
+		{					                    
+			nbiot_observe_step( dev,
                             curr,
                             buffer,
                             sizeof(buffer) );
 			}		                      
         nbiot_sleep(10);
     } while ( curr <= last + timeout );
-		return 0;
+	return 0;
    // return STATE_ERROR( dev );
 }
 
@@ -690,7 +687,7 @@ int nbiot_resource_add( nbiot_device_t *dev,
 	uri.resid=resid;
 	uri.flag|=NBIOT_SET_OBJID;
 	uri.flag|=NBIOT_SET_INSTID;
-  uri.flag|=NBIOT_SET_RESID;
+	uri.flag|=NBIOT_SET_RESID;
     obj = (nbiot_node_t*)NBIOT_LIST_GET( dev->nodes, objid );
     if ( !obj )
     {
@@ -767,6 +764,8 @@ int nbiot_resource_add( nbiot_device_t *dev,
     return NBIOT_ERR_OK;
 }
 
+
+
 int nbiot_resource_del( nbiot_device_t *dev,
                         uint16_t        objid,
                         uint16_t        instid,
@@ -817,12 +816,12 @@ int nbiot_resource_del( nbiot_device_t *dev,
 
 int nbiot_send_buffer(const nbiot_uri_t * uri, uint8_t  *buffer,size_t buffer_len,bool  updated)
 {
-  char tmp[8];
+	char tmp[8];
 	char buf[1024];
 	size_t  len=0;
 	uint8_t type=0;
 	uint8_t trigger=0;
-  uint8_t *msg=NULL;
+	uint8_t *msg=NULL;
 	nbiot_uri_t uri1;
 	uri1.msgid=uri->msgid;
 	uri1.objid=uri->objid;
@@ -871,15 +870,11 @@ int nbiot_send_buffer(const nbiot_uri_t * uri, uint8_t  *buffer,size_t buffer_le
     return NBIOT_ERR_OK;
 }
 
-int nbiot_recv_buffer( uint8_t           *buffer,
-                       size_t             buffer_len )
+int nbiot_recv_buffer( uint8_t *buffer, size_t   buffer_len )
 {
     int ret;
     size_t recv = 0;
-
-    ret = nbiot_udp_recv( buffer,
-                          buffer_len,
-                          &recv);
+    ret = nbiot_udp_recv( buffer, buffer_len, &recv);
     if ( ret )
     {
         return ret;

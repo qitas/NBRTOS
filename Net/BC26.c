@@ -9,9 +9,8 @@
 #include "ringbuf.h"
 #include "utils.h"
 #include "BC26.h"
+#include "fifo.h"
 
-
-//#include "fifo.h"
 //#include "led.h"
 
 
@@ -47,7 +46,7 @@ void netif_rx(uint8_t*buf,uint16_t *read)
 {
      uint8_t *msg_p=NULL;
      uint8_t ptr[1024]={0};
-     //*read=fifo_get(dl_buf_id,ptr);
+     *read=fifo_get(dl_buf_id,ptr);
      if(*read!=0)
      {
         if((msg_p = strstr((const char *)ptr, "+MIPL"))!=NULL)
@@ -63,16 +62,16 @@ void netif_rx(uint8_t*buf,uint16_t *read)
 
 void netdev_init(void)
 {
-	SendCmd("AT+NRB\r\n", "OK", 5000,0,10); 
-	SendCmd("AT+CIMI\r\n", "OK", 2000,3,5);
-	SendCmd("AT+CMEE=1\r\n","OK", 2000,0,10);
-    SendCmd("AT+CSCON=1\r\n","OK", 2000,0,10);  
-    SendCmd("AT+CEREG=2\r\n","OK", 2000,0,10);
-    SendCmd("AT+CGATT=1\r\n","OK", 2000,0,10);	
-    SendCmd("AT+CEREG?\r\n","CEREG:2,1", 3000,0,5);
-    SendCmd("AT+CEDRXS=0,5\r\n","OK", 3000,0,5); 
-	SendCmd("AT+CPSMS=0\r\n","OK", 3000,0,5); 	
-	SendCmd("AT+CSQ\r\n", "OK", 2000,0,5); 
+	SendCmd("AT+CFUN?\r\n", "OK", 2000,1,5);//模块射频功能是否打开，值为1
+	SendCmd("AT+CIMI\r\n", "OK", 2000,3,5);	//查询IMSI
+	SendCmd("AT+CMEE=1\r\n","OK", 2000,0,10);	// Report UE Error
+    SendCmd("AT+CSCON=1\r\n","OK", 2000,0,10);  //查询当前网络连接状态
+    SendCmd("AT+CEREG=2\r\n","OK", 2000,0,10);	//网络注册1=registered, 2=searching 
+    SendCmd("AT+CGATT=1\r\n","OK", 2000,0,10);	//启动网络附着
+    SendCmd("AT+CEREG?\r\n","CEREG:2,1", 3000,0,5);	//返回0为入网失败，返回1为入网成功
+    SendCmd("AT+CEDRXS=0,5\r\n","OK", 3000,0,5); //关闭eDRX
+	SendCmd("AT+CPSMS=0\r\n","OK", 3000,0,5); 	//关闭PSM
+	SendCmd("AT+CESQ\r\n", "OK", 2000,0,5); 	//查看信号强度
     printf("BC26:connect sucess\r\n");
 } 
 
@@ -386,8 +385,9 @@ void register_cmd_handler(sendmsg func,void *result_buf, volatile char *flag)
 char SendCmd(char* cmd, uint8_t *result,uint16_t timeout,uint8_t retry,uint16_t waittime)
 {	
 	char *msg_p=NULL;
-	time_t  nowtime=0,newtime=0,sum=0;
 	uint8_t retry_num=0,retryflag=0;
+	uint32_t  nowtime=0,newtime=0,sum=0;
+	
 	if(callback==NULL||result_ptr==NULL||flag_ok==NULL) return 2 ;
 	*flag_ok=0;
 	ringbuf_clear(result_ptr);//清除之前可能残留的信息
@@ -411,21 +411,22 @@ char SendCmd(char* cmd, uint8_t *result,uint16_t timeout,uint8_t retry,uint16_t 
 				ringbuf_clear(result_ptr);
 				break;
 			}
-			else{		   
+			else
+			{		   
 				msg_p=strstr(result_ptr->data,"ERROR");
 				ringbuf_clear(result_ptr);	
-				if(msg_p!=NULL)
-					return 2; 
+				if(msg_p!=NULL) return 2; 
 				/*	 
 				if(retry==1){
 				   osDelay(3000);
 				printf("retry cmd:%s",cmd);
 				callback((uint8_t*)cmd, strlen((const char *)cmd));							   
 				}	
-			  */						 
+				*/						 
 			}
 		}
-		else{
+		else
+		{
 			newtime=nbiot_time();
 			sum=newtime-nowtime;					
 		}
@@ -448,7 +449,7 @@ char SendCmd(char* cmd, uint8_t *result,uint16_t timeout,uint8_t retry,uint16_t 
 void SentData(char* cmd, uint8_t *result,uint16_t timeout)
 {
   	char *msg_p=NULL;
-	time_t  nowtime=0,newtime=0,sum=0;
+	uint32_t  nowtime=0,newtime=0,sum=0;
 	if(callback==NULL||result_ptr==NULL||flag_ok==NULL) return;
 	*flag_ok=0;
 	ringbuf_clear(result_ptr);	//清除之前可能残留的信息

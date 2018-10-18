@@ -118,37 +118,14 @@ void StartNBTask1(void const * argument);
   * @retval None
   */
 void MX_FREERTOS_Init(void) {
-  /* USER CODE BEGIN Init */
-       
-  /* USER CODE END Init */
 
-  /* USER CODE BEGIN RTOS_MUTEX */
-  /* add mutexes, ... */
-  /* USER CODE END RTOS_MUTEX */
-
-  /* USER CODE BEGIN RTOS_SEMAPHORES */
-  /* add semaphores, ... */
-  /* USER CODE END RTOS_SEMAPHORES */
-
-  /* USER CODE BEGIN RTOS_TIMERS */
-  /* start timers, add new ones, ... */
-  /* USER CODE END RTOS_TIMERS */
-
-  /* Create the thread(s) */
-  /* definition and creation of defaultTask */
   //osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 1, 128);
   //defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
   //osThreadDef(USBTask, StartUSBTask, osPriorityNormal, 2, 128);
   //USBTaskHandle = osThreadCreate(osThread(USBTask), NULL);
 	osThreadDef(NBTask, StartNBTask, osPriorityNormal, 4, 312);
-  NBTaskHandle = osThreadCreate(osThread(NBTask), NULL);
-  /* USER CODE BEGIN RTOS_THREADS */
-  /* add threads, ... */
-  /* USER CODE END RTOS_THREADS */
+	NBTaskHandle = osThreadCreate(osThread(NBTask), NULL);
 
-  /* USER CODE BEGIN RTOS_QUEUES */
-  /* add queues, ... */
-  /* USER CODE END RTOS_QUEUES */
 }
 
 /* USER CODE BEGIN Header_StartDefaultTask */
@@ -167,11 +144,11 @@ void StartDefaultTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-      osDelay(500);
-			vTaskSuspendAll();
-			HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_13);
-			printf("default UART1 task \t\n");
-			xTaskResumeAll();	
+		osDelay(500);
+		vTaskSuspendAll();
+		HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_13);
+		printf("default UART1 task \t\n");
+		xTaskResumeAll();	
   }
   /* USER CODE END StartDefaultTask */
 }
@@ -180,13 +157,13 @@ void StartDefaultTask(void const * argument)
 void StartUSBTask(void const * argument)
 {
   /* init code for USB_DEVICE */
-  MX_USB_DEVICE_Init();
+	MX_USB_DEVICE_Init();
 	uint8_t USBTxBuffer[] = "Rex qitas STM32 Virtual COM Port\r\n";
   /* USER CODE BEGIN StartDefaultTask */
   /* Infinite loop */
   for(;;)
   {
-    osDelay(2000);
+		osDelay(2000);
 		vTaskSuspendAll();
 		CDC_Transmit_FS(USBTxBuffer, strlen((char *)USBTxBuffer));
 		xTaskResumeAll();		

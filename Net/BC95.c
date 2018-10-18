@@ -11,7 +11,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
+#include “time.h”
 
 
 //#include "fifo.h"
@@ -393,8 +393,8 @@ void register_cmd_handler(sendmsg func,void *result_buf, volatile char *flag)
 char SendCmd(char* cmd, uint8_t *result,uint16_t timeout,uint8_t retry,uint16_t waittime)
 {	
 	char *msg_p=NULL;
-	time_t  nowtime=0,newtime=0,sum=0;
 	uint8_t retry_num=0,retryflag=0;
+	uint32_t  nowtime=0,newtime=0,sum=0;
 	if(callback==NULL||result_ptr==NULL||flag_ok==NULL) return 2 ;
 	*flag_ok=0;
 	ringbuf_clear(result_ptr);//清除之前可能残留的信息
@@ -425,7 +425,7 @@ char SendCmd(char* cmd, uint8_t *result,uint16_t timeout,uint8_t retry,uint16_t 
 					return 2; 
 				/*	 
 				if(retry==1){
-				   mDelay(3000);
+				   osDelay(3000);
 				printf("retry cmd:%s",cmd);
 				callback((uint8_t*)cmd, strlen((const char *)cmd));							   
 				}	
@@ -455,7 +455,7 @@ char SendCmd(char* cmd, uint8_t *result,uint16_t timeout,uint8_t retry,uint16_t 
 void SentData(char* cmd, uint8_t *result,uint16_t timeout)
 {
   	char *msg_p=NULL;
-	time_t  nowtime=0,newtime=0,sum=0;
+	uint32_t  nowtime=0,newtime=0,sum=0;
 	if(callback==NULL||result_ptr==NULL||flag_ok==NULL) return;
 	*flag_ok=0;
 	ringbuf_clear(result_ptr);	//清除之前可能残留的信息

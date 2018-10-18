@@ -1,9 +1,11 @@
 #ifndef FIFO_H
 #define FIFO_H
 
-#define pipe_num 10
 #include <stdint.h>
 #include "memb.h"
+
+#define pipe_num 10
+
 
 typedef struct{
   uint8_t used;

@@ -157,14 +157,14 @@ void StartNBTask(void const * argument)
 	ret = nbiot_device_create(&dev,endpoint_name,uri,life_time,write_callback,read_callback,execute_callback);
 	if ( ret )
 	{
-		nbiot_device_destroy( dev );
+		//nbiot_device_destroy( dev );
 		printf( "device create failed, code = %d.\r\n", ret );
 	}
 	ret = nbiot_device_connect(dev,60);
 	if (ret)
 	{
-		nbiot_device_close( dev, 100);
-		nbiot_device_destroy( dev );
+		//nbiot_device_close( dev, 100);
+		//nbiot_device_destroy( dev );
 		printf( "connect OneNET failed.\r\n" );
 	}
 	else
@@ -174,7 +174,7 @@ void StartNBTask(void const * argument)
 	for(;;)
 	{   
 		printf("IN NBTask round\r\n");					
-		ret = nbiot_device_step( dev, 1);
+		//ret = nbiot_device_step( dev, 1);
 		if ( ret )
 		{
 			printf( "device step error, code = %d.\r\n", ret );

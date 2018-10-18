@@ -1,6 +1,7 @@
+
+#include <string.h>
 #include "fifo.h"
 #include "memb.h"
-#include "string.h"
 
 pipe_t pipe[pipe_num]={0}; 
 int8_t fifo_init(struct memb *ptr)

@@ -37,9 +37,9 @@
  * \author
  *         Adam Dunkels <adam@sics.se>
  */
-
+#include <string.h>
 #include "ringbuf.h"
-#include "string.h"
+
 /*---------------------------------------------------------------------------*/
 void ringbuf_init(struct ringbuf *r, uint8_t *dataptr, uint16_t size)
 {

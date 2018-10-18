@@ -3,8 +3,8 @@
  * All rights reserved.
 **/
 
+#include <stdio.h>
 #include "internal.h"
-#include "stdio.h"
 
 #ifdef BC26
 #include "BC26.h"

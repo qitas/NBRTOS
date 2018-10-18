@@ -9,7 +9,7 @@
 #include "ringbuf.h"
 #include "utils.h"
 #include "BC26.h"
-//#include “time.h"
+
 
 //#include "fifo.h"
 //#include "led.h"
@@ -17,6 +17,8 @@
 
 signed char dl_buf_id=-1;
 static char cmd_buff[1024];
+
+
 sendmsg callback=NULL;
 volatile char *flag_ok=NULL;
 struct ringbuf *result_ptr=NULL;
@@ -26,18 +28,12 @@ struct ringbuf *result_ptr=NULL;
 void nbiot_sleep( int milliseconds)
 {
 	osDelay(milliseconds);
-	return;
 }
 
-unsigned int nbiot_time(void)
+uint32_t nbiot_time(void)
 {
-   return 100;//(RTC->CNTL | RTC->CNTH << 16);
-}
-
-void nbiot_time_init(void)
-{
-	//delay_init();
-	//RTC_Init();
+	//(RTC->CNTL | RTC->CNTH << 16);
+   return xTaskGetTickCount();
 }
 
 
@@ -422,7 +418,7 @@ char SendCmd(char* cmd, uint8_t *result,uint16_t timeout,uint8_t retry,uint16_t 
 					return 2; 
 				/*	 
 				if(retry==1){
-				   mDelay(3000);
+				   osDelay(3000);
 				printf("retry cmd:%s",cmd);
 				callback((uint8_t*)cmd, strlen((const char *)cmd));							   
 				}	

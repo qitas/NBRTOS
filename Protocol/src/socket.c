@@ -9,10 +9,12 @@
 #include <errno.h>
 #include <stdio.h>
 
-#include <platform.h>
+#include "platform.h"
 
 #ifdef BC26
 #include "BC26.h"
+#elif BC28
+#include "BC28.h"
 #else
 #include "BC95.h"
 #endif
@@ -22,9 +24,7 @@
 void output_buffer( uint8_t *buffer, int length )
 {
     int i;
-
     if ( length == 0 ) nbiot_printf( "\n" );
-
     i = 0;
     while ( i < length )
     {
@@ -62,41 +62,34 @@ void output_buffer( uint8_t *buffer, int length )
 
 #define INVALID_SOCKET (-1)
 
-
-
-int nbiot_udp_send( const void   *buff,
-                    size_t       size)
+int nbiot_udp_send( const void *buff,size_t  size)
 {
 
-		   if (NULL == buff)
-		{
-			return NBIOT_ERR_BADPARAM;
-		}
+	if (NULL == buff)
+	{
+		return NBIOT_ERR_BADPARAM;
+	}
 #ifdef NBIOT_DEBUG
-			nbiot_printf( "sendto(len = %d)", size );
+	nbiot_printf( "sendto(len = %d)", size );
 		//	output_buffer( (uint8_t*)buff, size );
-		  printf("%s\r\n",buff);
+	printf("%s\r\n",buff);
 #endif	
-		 ip_SendData((int8_t *)buff,size);		
-		 return NBIOT_ERR_OK;
-
+	ip_SendData((int8_t *)buff,size);		
+	return NBIOT_ERR_OK;
 }
 
 
-int nbiot_udp_recv( void              *buff,
-                    size_t             size,
-                    size_t            *read)
+int nbiot_udp_recv( void  *buff,size_t  size,size_t  *read)
 {
-
-	 *read=0;
-	 if (NULL == buff ||NULL == read)
+	*read=0;
+	if (NULL == buff ||NULL == read)
     {
         return NBIOT_ERR_BADPARAM;
     }
-		netif_rx(buff,(uint16_t *)read);
-		if(*read!=0){ 
-			printf("recv:%s\r\n",buff);
-		}	   
+	netif_rx(buff,(uint16_t *)read);
+	if(*read!=0){ 
+		printf("recv:%s\r\n",buff);
+	}	   
     return NBIOT_ERR_OK;
 }
 

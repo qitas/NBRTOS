@@ -3,11 +3,15 @@
  * All rights reserved.
 **/
 
-#include <platform.h>
-#include <time.h>
 #include "stm32f10x_rtc.h"
 #include "stm32f10x.h"
 #include "core_cm3.h"
+
+#include "platform.h"
+#include “time.h”
+
+
+
 static __IO time_t SystickTime=0; 
 static u8  c_us=0;//us延时倍乘数
 static u16 c_ms=0;//ms延时倍乘数
@@ -149,7 +153,7 @@ void RTC_Init(void)
 void nbiot_sleep( int milliseconds)
 {
     mDelay(milliseconds);
-	  return;
+	return;
 }
 
 
@@ -161,9 +165,9 @@ time_t nbiot_time( void )
 
 void nbiot_time_init(void)
 {
-   delay_init();
-	 RTC_Init();
-   return ;
+	delay_init();
+	RTC_Init();
+	return ;
 }
 
 

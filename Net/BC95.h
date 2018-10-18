@@ -49,29 +49,29 @@ uint32_t ip_SendData(int8_t * buf, uint32_t len);
 
 void netif_rx(uint8_t*buf,uint16_t *read);
 
-void bc95_addobj(uint16_t		objid,uint16_t		attrcount,uint16_t		actcount);
-void bc95_delobj(uint16_t 	 objid);
- size_t bc95_register_request( uint8_t  *buffer,									    
+void nb_addobj(uint16_t		objid,uint16_t		attrcount,uint16_t		actcount);
+void nb_delobj(uint16_t 	 objid);
+ size_t nb_register_request( uint8_t  *buffer,									    
                                 size_t    buffer_len);
 
- size_t bc95_register_update (uint16_t lifttime, 
+ size_t nb_register_update (uint16_t lifttime, 
  	                           uint8_t *buffer,									    
                                size_t  buffer_len);
 
- size_t bc95_close_request( uint8_t  *buffer,									    
+ size_t nb_close_request( uint8_t  *buffer,									    
                              size_t    buffer_len);
 
-void bc95_notify_upload(const nbiot_uri_t uri,uint8_t type,char *data);
+void nb_notify_upload(const nbiot_uri_t uri,uint8_t type,char *data);
 
-void bc95_read_upload(const nbiot_uri_t uri,uint8_t type,char *data);
+void nb_read_upload(const nbiot_uri_t uri,uint8_t type,char *data);
 
-void bc95_observe_rsp(int suc,const nbiot_uri_t uri);
+void nb_observe_rsp(int suc,const nbiot_uri_t uri);
 
-void bc95_discover_rsp(const nbiot_uri_t *uri,size_t lenth,char *value);
+void nb_discover_rsp(const nbiot_uri_t *uri,size_t lenth,char *value);
 	
-void bc95_write_rsp(int suc,uint16_t ackid);
+void nb_write_rsp(int suc,uint16_t ackid);
 
-void bc95_execute_rsp(int suc,uint16_t ackid);
+void nb_execute_rsp(int suc,uint16_t ackid);
 
 void register_cmd_handler(sendmsg func,void *result_buf,volatile char *flag);
 char SendCmd(char* cmd, uint8_t *result,uint16_t timeout,uint8_t retry,uint16_t waittime);

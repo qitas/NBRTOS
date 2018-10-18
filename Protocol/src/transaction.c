@@ -2,9 +2,9 @@
  * Copyright (c) 2017 China Mobile IOT.
  * All rights reserved.
 **/
-
-#include "internal.h"
 #include <stdio.h>
+#include "internal.h"
+
 
 int nbiot_transaction_add( nbiot_device_t              *dev,
 	                       bool                         update,

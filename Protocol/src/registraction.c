@@ -2,10 +2,17 @@
  * Copyright (c) 2017 China Mobile IOT.
  * All rights reserved.
 **/
-
+#include <stdio.h>
 #include "internal.h"
-#include "stdio.h"
+
+#ifdef BC26
+#include "BC26.h"
+#elif BC28
+#include "BC28.h"
+#else
 #include "BC95.h"
+#endif
+
 //#include "led.h"
 
 #define REGISTER_START  1
@@ -44,7 +51,7 @@ int nbiot_register_start( nbiot_device_t *dev,
          dev->state == STATE_DEREGISTERED )
 #endif
     {
-      length=bc95_register_request(buffer,buffer_len);
+      length=nb_register_request(buffer,buffer_len);
 		 if(length>0){
 		 	dev->state = STATE_REG_PENDING;
 		  nbiot_transaction_add( dev,
@@ -89,7 +96,7 @@ int nbiot_register_update( nbiot_device_t *dev,
     if (dev->state == STATE_REG_UPDATE_NEEDED )
     {
 			   printf("update\r\n");
-         length=bc95_register_update(dev->life_time,buffer,buffer_len);
+         length=nb_register_update(dev->life_time,buffer,buffer_len);
 		 if(length>0){
 		 	  dev->state = STATE_REG_UPDATE_PENDING;
 			   nbiot_transaction_add( dev,
@@ -128,7 +135,7 @@ int nbiot_deregister( nbiot_device_t *dev,
          dev->state == STATE_REG_UPDATE_NEEDED ||
          dev->state == STATE_REG_UPDATE_PENDING )
     {
-		length=bc95_close_request(buffer,buffer_len);
+		length=nb_close_request(buffer,buffer_len);
 		 if(length>0){
            dev->state = STATE_DEREG_PENDING;
 			   nbiot_transaction_add( dev,

@@ -12,6 +12,8 @@
 
 #ifdef BC26
 #include "BC26.h"
+#elif BC28
+#include "BC28.h"
 #else
 #include "BC95.h"
 #endif
@@ -19,10 +21,10 @@
 
 int nbiot_node_read( nbiot_node_t        *node,
                      nbiot_uri_t         *uri,
-										 uint8_t             flag, 
-					           uint8_t       *buffer,
-                     size_t        buffer_len,
-                     bool          updated )
+					uint8_t             flag, 
+					uint8_t       *buffer,
+                    size_t        buffer_len,
+                    bool          updated )
 {
 	 if (flag & NBIOT_SET_RESID )
     {
@@ -69,21 +71,21 @@ int nbiot_node_read( nbiot_node_t        *node,
             }
 						
 		
-						nbiot_itoa(node->id,temp,8);
-						strcat(buffer,temp);
-						len=len+strlen(temp);
-						strcat(buffer,",");
-						len=len+1;
-						nbiot_itoa(data->type,temp,1);
-						strcat(buffer,temp);
-						len=len+1;
-						strcat(buffer,",");
-						len=len+1;
-						strcat(buffer,value);
-						strcat(buffer,";");
-						len=len+1;
-						if(len>=buffer_len)
-							return -1;
+			nbiot_itoa(node->id,temp,8);
+			strcat(buffer,temp);
+			len=len+strlen(temp);
+			strcat(buffer,",");
+			len=len+1;
+			nbiot_itoa(data->type,temp,1);
+			strcat(buffer,temp);
+			len=len+1;
+			strcat(buffer,",");
+			len=len+1;
+			strcat(buffer,value);
+			strcat(buffer,";");
+			len=len+1;
+			if(len>=buffer_len)
+				return -1;
             return len;
         }
     }
@@ -103,22 +105,22 @@ int nbiot_node_read( nbiot_node_t        *node,
               node != NULL;
               node = node->next )
         { 
-					   if((flag&NBIOT_SET_RESID)==0)
-							  uri->instid=node->id;
-					   if(buffer_len>0)
-						{					
-					    value_len=nbiot_node_read( node,
-                                         uri,
-							                           flag,
-					                               buffer,
-					                               buffer_len,
-                                         updated );
-					  if(value_len==-1)
-							break;
-						num+=value_len;
-						buffer_len=buffer_len-num;
+			if((flag&NBIOT_SET_RESID)==0)
+				  uri->instid=node->id;
+			if(buffer_len>0)
+			{					
+			value_len=nbiot_node_read( node,
+							uri,
+							flag,
+							buffer,
+							buffer_len,
+							updated );
+		  if(value_len==-1)
+				break;
+			num+=value_len;
+			buffer_len=buffer_len-num;
 						
-					}
+			}
         }
 
         return num;
@@ -139,7 +141,7 @@ int nbiot_node_write( nbiot_node_t          *node,
         nbiot_value_t *data = (nbiot_value_t*)node->data;
         if ( !(data->flag&NBIOT_WRITABLE) )
         {
-            bc95_write_rsp(0, ackid);
+            nb_write_rsp(0, ackid);
 		      	return COAP_METHOD_NOT_ALLOWED_405;
         }
 
@@ -174,7 +176,7 @@ int nbiot_node_write( nbiot_node_t          *node,
                         uri->resid,
                         data );
         }
-        bc95_write_rsp(2, ackid);
+        nb_write_rsp(2, ackid);
         return COAP_CHANGED_204;
     }
     

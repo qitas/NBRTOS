@@ -2,8 +2,9 @@
  * Copyright (c) 2017 China Mobile IOT.
  * All rights reserved.
 **/
+
 #include "platform.h"
-#include "NB_BC95.h"
+#include "BC95.h"
 #include "usart1.h"
 #include "usart3.h"
 #include "delay.h"

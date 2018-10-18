@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "internal.h"
+
+
 extern uint32_t array[2][3];
 nbiot_observe_t* nbiot_observe_add( nbiot_device_t    *dev,
                                     const nbiot_uri_t *uri )
@@ -157,7 +159,7 @@ int nbiot_observe_del( nbiot_device_t    *dev,
 static void observe_read( nbiot_device_t    *dev,
                           nbiot_node_t      *node,
                           nbiot_uri_t       *uri,
-						              uint8_t           *buffer,
+						  uint8_t           *buffer,
                           size_t             buffer_len)
 {
 	uint8_t i = 0;
@@ -262,8 +264,8 @@ void nbiot_observe_step( nbiot_device_t *dev,
                         observe_read( dev,                                  
                                       node,
                                       uri,
-											                buffer,
-											                buffer_len);
+									buffer,
+									buffer_len);
                     }
                 }
             }

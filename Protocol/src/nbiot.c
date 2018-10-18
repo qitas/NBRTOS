@@ -5,18 +5,13 @@
 
 #include "internal.h"
 #include "stdio.h"
-//#include "BC95.h"
-//#include "at_cmd.h"
 
 #ifdef BC26
 #include "BC26.h"
-#include "BC26_AT.h"
 #elif BC28
 #include "BC28.h"
-#include "BC28_AT.h"
 #else
 #include "BC95.h"
-#include "at_cmd.h"
 #endif
 
 //#include "led.h"
@@ -66,7 +61,7 @@ static void device_free_nodes( nbiot_device_t *dev )
         while ( inst )
         {
             NBIOT_LIST_FREE( inst->data );
-			bc95_delobj( obj->id);
+			nb_delobj( obj->id);
             inst = inst->next;
         }
         NBIOT_LIST_FREE( obj->data );
@@ -167,7 +162,7 @@ static void handle_write( nbiot_device_t        *dev,
         node = nbiot_node_find( dev, uri );
         if ( !node )
         {
-            bc95_write_rsp(0, ackid);
+            nb_write_rsp(0, ackid);
             break;
         }
 
@@ -210,7 +205,7 @@ static void handle_execute( nbiot_device_t          *dev,
         data = (nbiot_value_t*)node->data;
         if ( !(data->flag&NBIOT_EXECUTABLE) )
         {
-            bc95_execute_rsp(0,ackid);
+            nb_execute_rsp(0,ackid);
             break;
         }
 
@@ -223,7 +218,7 @@ static void handle_execute( nbiot_device_t          *dev,
                           buffer,
                           buffer_len );
         }
-         bc95_execute_rsp(2,ackid);
+         nb_execute_rsp(2,ackid);
     } while (0);
 }
 
@@ -236,7 +231,7 @@ static void handle_observe( nbiot_device_t    *dev,
 	do
     {
         nbiot_node_t *node;
-			  bc95_observe_rsp(1,*uri);
+			  nb_observe_rsp(1,*uri);
         node = nbiot_node_find( dev, uri );
         if ( !node )
         {
@@ -252,7 +247,7 @@ static void handle_discover(const nbiot_uri_t *uri,size_t lenth,char *value)
 {
 	do
     {
-				   bc95_discover_rsp(uri,lenth,value);
+				   nb_discover_rsp(uri,lenth,value);
     } while (0);
 }
 
@@ -730,7 +725,7 @@ int nbiot_resource_add( nbiot_device_t *dev,
         nbiot_memzero( inst, sizeof(nbiot_node_t) );
         inst->id = instid;
         obj->data = NBIOT_LIST_ADD( obj->data, inst );
-		    bc95_addobj(objid,attrcount,actcount);
+		    nb_addobj(objid,attrcount,actcount);
 				nbiot_observe_add(dev,(const nbiot_uri_t * )&uri);
     }
 
@@ -808,7 +803,7 @@ int nbiot_resource_del( nbiot_device_t *dev,
                 {
                     dev->state = STATE_REG_UPDATE_NEEDED;
                 }
-								bc95_delobj( objid);
+								nb_delobj( objid);
 
                 return NBIOT_ERR_OK;
             }
@@ -862,10 +857,10 @@ int nbiot_send_buffer(const nbiot_uri_t * uri, uint8_t  *buffer,size_t buffer_le
 	  	if(*msg=='\0')
 		     trigger=1;
         if(updated==true){
-           bc95_notify_upload(uri1,type,buf);
+           nb_notify_upload(uri1,type,buf);
 		   }	
         else
-		       bc95_read_upload(uri1,type,buf);
+		       nb_read_upload(uri1,type,buf);
 				if(1==trigger)
 					break;
 	   }else{

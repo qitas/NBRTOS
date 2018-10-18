@@ -83,7 +83,7 @@ void netdev_init(void)
     printf("BC26:connect sucess\r\n");
 } 
 
-void bc95_addobj(uint16_t	objid,uint16_t	attrcount,uint16_t	actcount)
+void nb_addobj(uint16_t	objid,uint16_t	attrcount,uint16_t	actcount)
 {
 	char tmp[10];
 	memset(cmd_buff,0,50);
@@ -106,7 +106,7 @@ void bc95_addobj(uint16_t	objid,uint16_t	attrcount,uint16_t	actcount)
 	SendCmd(cmd_buff,"OK",300,0,5);
 }
 
-void bc95_delobj(uint16_t objid)
+void nb_delobj(uint16_t objid)
 {
 	 char tmp[10];
 	 memset(cmd_buff,0,50);
@@ -118,7 +118,7 @@ void bc95_delobj(uint16_t objid)
  }
 
 
-size_t bc95_register_request( uint8_t *buffer,	size_t buffer_len)
+size_t nb_register_request( uint8_t *buffer,	size_t buffer_len)
 {   
     size_t  len=0;
 	char status=0;
@@ -133,7 +133,7 @@ size_t bc95_register_request( uint8_t *buffer,	size_t buffer_len)
 	return 0;
 }
 
-size_t bc95_register_update (uint16_t lifttime, uint8_t *buffer,size_t  buffer_len)
+size_t nb_register_update (uint16_t lifttime, uint8_t *buffer,size_t  buffer_len)
 {   
     size_t  len=0;
 	char ative[6]={0};
@@ -150,7 +150,7 @@ size_t bc95_register_update (uint16_t lifttime, uint8_t *buffer,size_t  buffer_l
 	return 0;
 }
 
- size_t bc95_close_request( uint8_t  *buffer,size_t  buffer_len)
+ size_t nb_close_request( uint8_t  *buffer,size_t  buffer_len)
 {   
     size_t  len=0;
 	len=strlen("AT+MIPLCLOSE=0\r\n")+1;
@@ -164,7 +164,7 @@ size_t bc95_register_update (uint16_t lifttime, uint8_t *buffer,size_t  buffer_l
 }  
 
 
- void bc95_notify_upload(const nbiot_uri_t uri,uint8_t type,char *data)
+ void nb_notify_upload(const nbiot_uri_t uri,uint8_t type,char *data)
 {
 	
   char tmp[10];
@@ -236,7 +236,7 @@ size_t bc95_register_update (uint16_t lifttime, uint8_t *buffer,size_t  buffer_l
 	SentData(cmd_buff,"OK",100);
 }
 
- void bc95_read_upload(const nbiot_uri_t uri,uint8_t type,char *data)
+ void nb_read_upload(const nbiot_uri_t uri,uint8_t type,char *data)
 {
 	
 	char tmp[10];
@@ -310,7 +310,7 @@ size_t bc95_register_update (uint16_t lifttime, uint8_t *buffer,size_t  buffer_l
 	SentData(cmd_buff,"OK",100);
 }
 
-void bc95_observe_rsp(int suc,const nbiot_uri_t uri)
+void nb_observe_rsp(int suc,const nbiot_uri_t uri)
 {
 	char tmp[10];
 	 memset(cmd_buff,0,50);
@@ -326,7 +326,7 @@ void bc95_observe_rsp(int suc,const nbiot_uri_t uri)
 	 SentData(cmd_buff,"OK",100);
 }
 
-void bc95_discover_rsp(const nbiot_uri_t *uri,size_t lenth,char *value)
+void nb_discover_rsp(const nbiot_uri_t *uri,size_t lenth,char *value)
 {
 	char tmp[10];
 	 memset(cmd_buff,0,50);
@@ -347,7 +347,7 @@ void bc95_discover_rsp(const nbiot_uri_t *uri,size_t lenth,char *value)
    printf("%s\r\n",cmd_buff);
 	 SentData(cmd_buff,"OK",100);
 }
-void bc95_write_rsp(int suc,uint16_t ackid)
+void nb_write_rsp(int suc,uint16_t ackid)
 {
 	char tmp[10];
 	 memset(cmd_buff,0,50);
@@ -364,7 +364,7 @@ void bc95_write_rsp(int suc,uint16_t ackid)
   
 }
 
-void bc95_execute_rsp(int suc,uint16_t ackid)
+void nb_execute_rsp(int suc,uint16_t ackid)
 {
 	char tmp[10];
 	 memset(cmd_buff,0,50);

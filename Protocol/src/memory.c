@@ -1,9 +1,10 @@
 
-#ifdef NBIOT_DEBUG
-#include <utils.h>
 #include <stdlib.h>
 #include <platform.h>
 
+#ifdef NBIOT_DEBUG
+
+#include <utils.h>
 static size_t s_total = 0;
 static size_t s_last = 100;
 
@@ -19,7 +20,6 @@ void *nbiot_malloc( size_t size )
         nbiot_printf( "nbiot_malloc() %dbytes memories.\n", (int)s_total );
         s_last += 100;
     }
-
     return (++ptr);
 }
 
@@ -34,9 +34,8 @@ void nbiot_free( void *ptr )
         free( tmp );
     }
 }
+
 #else
-#include <stdlib.h>
-#include <platform.h>
 
 void *nbiot_malloc( size_t size )
 {

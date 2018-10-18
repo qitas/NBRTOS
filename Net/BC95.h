@@ -1,9 +1,8 @@
-#ifndef BC95_H_
-#define BC95_H_
+#ifdef BC95
+
 
 #include <stdint.h>
 #include <string.h>
-
 #include "internal.h"
 
 typedef enum
@@ -42,6 +41,8 @@ typedef struct
 	uint8_t block2th;	//max size to trigger block-wise operation,0-2. 2^(8+n) bytes
 } MIPL_T;
 
+typedef void (*sendmsg)(uint8_t * buf, uint32_t len);
+
 void netdev_init(void);
 
 uint32_t ip_SendData(int8_t * buf, uint32_t len);
@@ -71,5 +72,9 @@ void bc95_discover_rsp(const nbiot_uri_t *uri,size_t lenth,char *value);
 void bc95_write_rsp(int suc,uint16_t ackid);
 
 void bc95_execute_rsp(int suc,uint16_t ackid);
+
+void register_cmd_handler(sendmsg func,void *result_buf,volatile char *flag);
+char SendCmd(char* cmd, uint8_t *result,uint16_t timeout,uint8_t retry,uint16_t waittime);
+void SentData(char* cmd, uint8_t *result,uint16_t timeout);
 
 #endif

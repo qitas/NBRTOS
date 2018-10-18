@@ -2,19 +2,22 @@
  * Copyright (c) 2018 Qitas.
  * All rights reserved.
 **/
-#include <nbiot.h>
+
 #include <utils.h>
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
-#include "platform.h"
+
 #include "stm32f1xx_hal.h"
+#include "platform.h"
 #include "cmsis_os.h"
 #include "adc.h"
 #include "gpio.h"
 #include "usart.h"
+#include "nbiot.h"
 #include "BC95.h"
+#include "BC26.h"
 #include "NBtask.h"
 
 nbiot_value_t temp;   /* ÎÂ¶È */

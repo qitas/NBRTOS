@@ -5,16 +5,19 @@
 
 #include "internal.h"
 #include "stdio.h"
-#include "BC95.h"
-#include "at_cmd.h"
-
-//#ifdef BC26
-//#include "BC26.h"
-//#include "BC26_AT.h"
-//#elifdef
 //#include "BC95.h"
 //#include "at_cmd.h"
-//#endif
+
+#ifdef BC26
+#include "BC26.h"
+#include "BC26_AT.h"
+#elif BC28
+#include "BC28.h"
+#include "BC28_AT.h"
+#else
+#include "BC95.h"
+#include "at_cmd.h"
+#endif
 
 //#include "led.h"
 

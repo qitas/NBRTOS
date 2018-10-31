@@ -467,14 +467,9 @@
           <GroupName>Net</GroupName>
           <Files>
             <File>
-              <FileName>ringbuf.c</FileName>
+              <FileName>fifo.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Net\ringbuf.c</FilePath>
-            </File>
-            <File>
-              <FileName>NBtask.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Net\NBtask.c</FilePath>
+              <FilePath>..\Net\fifo.c</FilePath>
             </File>
             <File>
               <FileName>BC95.c</FileName>
@@ -487,14 +482,24 @@
               <FilePath>..\Net\BC26.c</FilePath>
             </File>
             <File>
-              <FileName>fifo.c</FileName>
+              <FileName>BC28.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Net\fifo.c</FilePath>
+              <FilePath>..\Net\BC28.c</FilePath>
             </File>
             <File>
               <FileName>memb.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Net\memb.c</FilePath>
+            </File>
+            <File>
+              <FileName>ringbuf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Net\ringbuf.c</FilePath>
+            </File>
+            <File>
+              <FileName>NBtask.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Net\NBtask.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -767,13 +772,13 @@
       <TargetName>BC28</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060422::V5.06 update 4 (build 422)::ARMCC</pCCUsed>
+      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>STM32F103C8</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32F1xx_DFP.2.1.0</PackID>
+          <PackID>Keil.STM32F1xx_DFP.2.2.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000-0x20004FFF) IROM(0x8000000-0x800FFFF)  CLOCK(8000000) CPUTYPE("Cortex-M3")</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -1224,14 +1229,9 @@
           <GroupName>Net</GroupName>
           <Files>
             <File>
-              <FileName>ringbuf.c</FileName>
+              <FileName>fifo.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Net\ringbuf.c</FilePath>
-            </File>
-            <File>
-              <FileName>NBtask.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Net\NBtask.c</FilePath>
+              <FilePath>..\Net\fifo.c</FilePath>
             </File>
             <File>
               <FileName>BC95.c</FileName>
@@ -1244,14 +1244,24 @@
               <FilePath>..\Net\BC26.c</FilePath>
             </File>
             <File>
-              <FileName>fifo.c</FileName>
+              <FileName>BC28.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Net\fifo.c</FilePath>
+              <FilePath>..\Net\BC28.c</FilePath>
             </File>
             <File>
               <FileName>memb.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Net\memb.c</FilePath>
+            </File>
+            <File>
+              <FileName>ringbuf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Net\ringbuf.c</FilePath>
+            </File>
+            <File>
+              <FileName>NBtask.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Net\NBtask.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1981,14 +1991,9 @@
           <GroupName>Net</GroupName>
           <Files>
             <File>
-              <FileName>ringbuf.c</FileName>
+              <FileName>fifo.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Net\ringbuf.c</FilePath>
-            </File>
-            <File>
-              <FileName>NBtask.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Net\NBtask.c</FilePath>
+              <FilePath>..\Net\fifo.c</FilePath>
             </File>
             <File>
               <FileName>BC95.c</FileName>
@@ -2001,14 +2006,24 @@
               <FilePath>..\Net\BC26.c</FilePath>
             </File>
             <File>
-              <FileName>fifo.c</FileName>
+              <FileName>BC28.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Net\fifo.c</FilePath>
+              <FilePath>..\Net\BC28.c</FilePath>
             </File>
             <File>
               <FileName>memb.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Net\memb.c</FilePath>
+            </File>
+            <File>
+              <FileName>ringbuf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Net\ringbuf.c</FilePath>
+            </File>
+            <File>
+              <FileName>NBtask.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Net\NBtask.c</FilePath>
             </File>
           </Files>
         </Group>

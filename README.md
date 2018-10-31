@@ -1,10 +1,8 @@
-﻿[![sites](qitas/Qi.png)](http://www.qitas.cn)
+﻿# freeRTOS(NB-IoT)
 
-# NB-keil
+## 简介
 
-### 简介
-
-用于编译合适的NB驱动代码，基于STM32F103平台开发
+使用NB进行通信的freeRTOS工程模板，基于STM32F103平台开发
 
 
 ---
@@ -19,12 +17,6 @@
 
 ---
 
-## 说明
-
-2018-10-18: 增加bc26
-2018-10-17: 增加freeRTOS
-2018-10-16: 创建该仓库
-
----
 ## 为锻造最美之器
+
 [![sites](qitas/qitas.png)](http://www.qitas.cn)

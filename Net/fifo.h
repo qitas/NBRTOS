@@ -21,4 +21,5 @@ int8_t fifo_init(struct memb *ptr);
 int8_t fifo_put( int8_t pipe_id, uint16_t dataLen, uint8_t data_buf[]);
 int16_t fifo_get(int8_t queue_id,uint8_t *buf);
 
-#endif		 
+#endif
+		 
